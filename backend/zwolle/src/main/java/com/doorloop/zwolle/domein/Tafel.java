@@ -12,7 +12,7 @@ public class Tafel {
     long id;
 
     private boolean bezet;
-    String tafelnummer;
+    private String tafelnummer;
 
     public long getId() {
         return id;
