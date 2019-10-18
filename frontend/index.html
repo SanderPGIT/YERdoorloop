@@ -1,0 +1,141 @@
+<html>
+	<head>
+		<style>
+
+		</style>
+		<script>
+            function krijgstoel(){
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function(){
+                    if (this.readyState == 4 && this.status == 200) {
+                        var handler = xhr.responseText;
+                        var uObj =JSON.parse(handler);
+                        console.log(this.response);
+                        lijstmakenstoel(uObj);
+                    }
+                }
+                xhr.open("GET", "http://localhost:8082/allestoelen", true);
+                xhr.send();
+            }
+
+            function krijgtafel(){
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function(){
+                    if (this.readyState == 4 && this.status == 200) {
+                        var handler = xhr.responseText;
+                        var uObj =JSON.parse(handler);
+                        lijstmakenstoel(uObj);
+                    }
+                }
+                xhr.open("GET", "http://localhost:8082/alletafels", true);
+                xhr.send();
+            }
+
+            function lijstmakentafel(objectarray){
+				let table = document.createElement("table");
+				let tr = document.createElement("tr");
+				let td1 = document.createElement("td");
+				td1.innerHTML = "id";
+				tr.appendChild(td1);
+				let td2 = document.createElement("td");
+				td2.innerHTML = "bezet";
+				tr.appendChild(td2);
+				let td3 = document.createElement("td");
+				td3.innerHTML = "nummer";
+				tr.appendChild(td3);
+				table.appendChild(tr);
+				for(let i = 0; i < objectarray.length; i++){
+					let tr = document.createElement("tr");
+					let td1 = document.createElement("td");
+					td1.innerHTML = objectarray[i].id;
+					tr.appendChild(td1);
+					let td2 = document.createElement("td");
+					td2.innerHTML = objectarray[i].bezet;
+					tr.appendChild(td2);
+					let td3 = document.createElement("td");
+					td3.innerHTML = objectarray[i].tafelnummer;
+					tr.appendChild(td3);
+					table.appendChild(tr);
+				}
+				document.getElementById("test").appendChild(table);
+			}
+
+            function lijstmakenstoel(objectarray){
+				let table = document.createElement("table");
+				let tr = document.createElement("tr");
+				let td1 = document.createElement("td");
+				td1.innerHTML = "id";
+				tr.appendChild(td1);
+				let td2 = document.createElement("td");
+				td2.innerHTML = "bezet";
+				tr.appendChild(td2);
+				let td3 = document.createElement("td");
+				td3.innerHTML = "nummer";
+				tr.appendChild(td3);
+				table.appendChild(tr);
+				for(let i = 0; i < objectarray.length; i++){
+					let tr = document.createElement("tr");
+					let td1 = document.createElement("td");
+					td1.innerHTML = objectarray[i].id;
+					tr.appendChild(td1);
+					let td2 = document.createElement("td");
+					td2.innerHTML = objectarray[i].bezet;
+					tr.appendChild(td2);
+					let td3 = document.createElement("td");
+					td3.innerHTML = objectarray[i].nummer;
+					tr.appendChild(td3);
+					table.appendChild(tr);
+				}
+				document.getElementById("test").appendChild(table);
+			}
+
+            function stoelopslaan(){
+				var bezetting= document.getElementById('select').value;
+				var nummer= document.getElementById('nummer').value;
+				var mijnObject = {};
+				mijnObject.bezet = bezetting;
+				mijnObject.nummer = nummer;
+				var moJSON= JSON.stringify(mijnObject);
+                console.log(moJSON);
+				var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function(){
+                    
+                }
+                xhttp.open("POST", "http://localhost:8082/nieuwestoel", true);
+                xhttp.setRequestHeader("Content-type", "application/json");
+                xhttp.send(moJSON);
+			}
+
+            function tafelopslaan(){
+				var bezetting= document.getElementById('select').value;
+				var nummer= document.getElementById('nummer').value;
+				var mijnObject = {};
+				mijnObject.bezet = bezetting;
+				mijnObject.tafelnummer = nummer;
+				var moJSON= JSON.stringify(mijnObject);
+                console.log(moJSON);
+				var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function(){
+                    
+                }
+                xhttp.open("POST", "http://localhost:8082/nieuwetafel", true);
+                xhttp.setRequestHeader("Content-type", "application/json");
+                xhttp.send(moJSON);
+			}
+		</script>
+	</head>
+	<body>
+            <h5>bezet:</h5>
+            <select id='select'>
+                    <option value="true">true</option>
+                    <option value="false">false</option>
+            </select>
+            <h5>nummer:</h5>
+            <input type=text id='nummer'>
+            <input type=button onclick=stoelopslaan() value="voeg toe als stoel">
+            <input type=button onclick=tafelopslaan() value="voeg toe als tafel">
+            <div id="test"></div>
+            <input type=button onclick=krijgstoel() value="huidige stoellijst">
+            <input type=button onclick=krijgtafel() value="huidge tafellijst">
+	</body>
+</html>
