@@ -24,7 +24,7 @@
                     if (this.readyState == 4 && this.status == 200) {
                         var handler = xhr.responseText;
                         var uObj =JSON.parse(handler);
-                        lijstmakenstoel(uObj);
+                        lijstmakentafel(uObj);
                     }
                 }
                 xhr.open("GET", "http://localhost:8082/alletafels", true);
@@ -114,13 +114,13 @@
 				mijnObject.tafelnummer = nummer;
 				var moJSON= JSON.stringify(mijnObject);
                 console.log(moJSON);
-				var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function(){
+				var xhttp2 = new XMLHttpRequest();
+                xhttp2.onreadystatechange = function(){
                     
                 }
-                xhttp.open("POST", "http://localhost:8082/nieuwetafel", true);
-                xhttp.setRequestHeader("Content-type", "application/json");
-                xhttp.send(moJSON);
+                xhttp2.open("POST", "http://localhost:8082/nieuwetafel", true);
+                xhttp2.setRequestHeader("Content-type", "application/json");
+                xhttp2.send(moJSON);
 			}
 		</script>
 	</head>
